@@ -6,13 +6,23 @@ export interface Clock {
   now(): number;
 }
 
+/** Host-owned video metadata, kept local so the driver has no host dependency. */
+export interface VideoFrameReference {
+  pts: number;
+  timeBase: [number, number];
+  width: number;
+  height: number;
+  status?: "gap";
+  reason?: string;
+}
+
 export interface Observation {
   id: string;
   controllerId: string;
   mediaType: string;
   /** Explicit caller-owned output or a timeline asset; inline media has no path. */
   path?: string;
-  timeline?: { recordId?: string; sequence?: number; asset: string; video?: import("../../shared/timeline-types").VideoFrameReference };
+  timeline?: { recordId?: string; sequence?: number; asset: string; video?: VideoFrameReference };
   /** Transient response bytes; never written into device event logs. */
   data?: string;
   timing: { clock: string; requestedAtMs: number; receivedAtMs: number };
