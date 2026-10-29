@@ -17,3 +17,15 @@ Tools > Scripting > File > Load script. The bridge listens on
 `contracts.ts` and `tool-contract.ts` are adapted from the Baseware
 reference implementation. Behavior follows the bridge protocol spec;
 this package carries no host dependency.
+
+## Development
+
+From this package directory, install dependencies and check all source types:
+
+```sh
+bun install
+bun run typecheck
+```
+
+The type check runs independently of the host repository and does not connect
+to mGBA.
