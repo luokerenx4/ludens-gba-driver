@@ -4,6 +4,28 @@ Community GBA driver for the Baseware device service. Speaks the
 socket-bridge protocol (`docs/reference/driver-bridge-protocol.md` in the host repo)
 to a scripted mGBA 0.10.5 instance.
 
+## Install in Ludens
+
+With Ludens's `baseware` and `rsa` CLIs on `PATH`, use a reviewed commit as
+`<revision>` below. Discovery installs and checks the driver package; it does
+not install or start mGBA. Run `rsa init` in a new workspace directory outside
+the source checkout:
+
+```sh
+baseware driver discover --package 'github:luokerenx4/ludens-gba-driver#<revision>'
+mkdir -p /absolute/path/to/workspace
+cd /absolute/path/to/workspace
+rsa init --driver mgba \
+  --driver-package 'github:luokerenx4/ludens-gba-driver#<revision>'
+rsa up --dry-run
+```
+
+Prepare mGBA, the ROM and `bridge.lua` manually as described below before
+running `rsa up`. Do not pass `--game`: this driver connects to the prepared
+instance. For a custom bridge port, set the same `port` in `rsa.json`.
+For local development, use
+`--driver-package file:/absolute/path/to/ludens-gba-driver`.
+
 ## Backend
 
 mGBA itself is [upstream software](https://mgba.io), not shipped here.
